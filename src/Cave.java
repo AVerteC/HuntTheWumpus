@@ -1,4 +1,4 @@
-public class Cave{
+public class Cave {
     public String name;
     public String num;
     public int num1;
