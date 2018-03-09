@@ -10,7 +10,7 @@ http://dave-reed.com/csc222.S13/HW/HW5.html
 
 February 26 post
 This MIGHT Help read the cave Data
-
+```
 public CaveMaze() throws java.io.FileNotFoundException {
 Scanner infile = new Scanner(new File("caves.dat"));
 
@@ -25,9 +25,7 @@ int num4 = infile.nextInt();
 String name = infile.nextLine().trim();
 
 // then create a new cave with that data num1 is the cave number and num2-4 are the adjacent rooms
-
-
-
+```
 
 February 26 post
 Hunt the Wumpus
