@@ -1,21 +1,27 @@
 public class Cave {
     private String name;
-    private String num;
-    private int num1;
+    //private String num;
+    private int id;
     private int num2;
     private int num3;
     private int num4;
+    private int content;
     private boolean isVisited = false;
     //constructor
 
-    public Cave(String name, int num1, int num2, int num3, int num4) {
+    public Cave(String name, int id, int num2, int num3, int num4, int content) {
         this.name = name;
-        this.num1 = num1;
+        this.id = id;
         this.num2 = num2;
         this.num3 = num3;
         this.num4 = num4;
+        this.content = content;
+
     }
 
+    public enum CaveContents {
+        EMPTY, WUMPUS, BATS, PIT
+    }
 
     public void markAsVisited(){
         this.isVisited = true;
@@ -42,6 +48,7 @@ public class Cave {
         }
     return result;
     }
+
 
 
 }

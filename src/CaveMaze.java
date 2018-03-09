@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.util.Random;
@@ -16,17 +17,11 @@ public class CaveMaze {
      *   @author Dave Reed
      *   @version 4/1/13
      */
+
     public enum CaveContents {
         EMPTY, WUMPUS, BATS, PIT
     }
 
-    public void grenWumpimaker() {
-        Random rand = new Random();
-        //1 to 5 wumpi
-        this.numWumpi = rand.nextInt(20/4) + 1;
-        //wumpi * 4 = grenades
-        this.numGrenades = this.numWumpi*4;
-    }
 
     /**
      * Constructs a CaveMaze from the data found in a file.  Initially, there is 1 pit, 1 swarm of bats, and
@@ -40,18 +35,28 @@ public class CaveMaze {
         int numCaves = infile.nextInt();
         this.caves = new Cave[numCaves];
 
+        Random rand = new Random();
+        //1 to 5 wumpi
+        this.numWumpi = rand.nextInt(20/4) + 1;
+        //wumpi * 4 = grenades
+        this.numGrenades = this.numWumpi*4;
+
         for (int i = 0; i < numCaves; i++) {
-            int num1 = infile.nextInt();
+            int id = infile.nextInt();
             int num2 = infile.nextInt();
             int num3 = infile.nextInt();
             int num4 = infile.nextInt();
+            // 0 is none, 1 is wumpus, 2 is bats, 3 is pits
+            int content = infile.nextInt();
             String name = infile.nextLine().trim();
-            this.caves[num1] = new Cave(name, num1, num2, num3, num4);
+            this.caves[id] = new Cave(name, id, num2, num3, num4, content);
         }
 
         this.currentCave = this.caves[0];
         this.currentCave.markAsVisited();
+        System.out.println(Arrays.toString(this.caves));
     }
+
 
 
 
@@ -100,6 +105,11 @@ public class CaveMaze {
         return message;
     }
 
+    public void makeWumpi() {
+
+    }
+
+
     /**
      * Reports whether the player is still alive.
      *   @return true if alive, false otherwise
@@ -115,11 +125,11 @@ public class CaveMaze {
     public boolean stillWumpi() {
         return true;
     }
+
+
+
+    public static void main (String[]args) throws java.io.FileNotFoundException{
+        CaveMaze maze = new CaveMaze("cavesdata.dat");
+
+    }
 }
-
-
-    //public static void main (String[]args) throws java.io.FileNotFoundException{
-    //    CaveMaze maze = new CaveMaze("cavesdata.dat");
-
-    //}
-//}

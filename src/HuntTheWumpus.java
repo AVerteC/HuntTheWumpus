@@ -1,19 +1,20 @@
-/*
+import java.io.File;
 import java.util.Scanner;
 
-*/
+
 /**
  * Simple, text-based interface for playing "Hunt the Wumpus"
  *   @author Dave Reed
  *   @version 4/1/13
- *//*
+ */
 
 public class HuntTheWumpus {
 
     public static void main(String[] args) throws java.io.FileNotFoundException {
-        CaveMaze maze = new CaveMaze("caves.txt");
+        CaveMaze maze = new CaveMaze("cavesdata.dat");
 
-        System.out.println("HUNT THE WUMPUS:  Your mission is to explore the maze of caves");
+
+     /*   System.out.println("HUNT THE WUMPUS:  Your mission is to explore the maze of caves");
         System.out.println("and destroy all of the wumpi (without getting yourself killed).");
         System.out.println("To move to an adjacent cave, enter 'm' and the tunnel number.");
         System.out.println("To toss a grenade into a cave, enter 't' and the tunnel number.");
@@ -42,5 +43,7 @@ public class HuntTheWumpus {
             }
         }
         System.out.println("GAME OVER");
-    }
-}*/
+    }*/
+  }
+}
+
