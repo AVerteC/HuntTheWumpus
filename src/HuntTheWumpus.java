@@ -1,7 +1,3 @@
-import java.io.File;
-import java.util.Scanner;
-
-
 /**
  * Simple, text-based interface for playing "Hunt the Wumpus"
  *   @author Dave Reed
