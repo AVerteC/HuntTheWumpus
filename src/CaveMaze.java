@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Random;
 
 
-
 public class CaveMaze {
     private Cave currentCave;
     private Cave[] caves;
@@ -17,11 +16,9 @@ public class CaveMaze {
      *   @author Dave Reed
      *   @version 4/1/13
      */
-
     public enum CaveContents {
         EMPTY, WUMPUS, BATS, PIT
     }
-
 
     /**
      * Constructs a CaveMaze from the data found in a file.  Initially, there is 1 pit, 1 swarm of bats, and
@@ -56,9 +53,6 @@ public class CaveMaze {
         this.currentCave.markAsVisited();
         System.out.println(Arrays.toString(this.caves));
     }
-
-
-
 
     /**
      * Moves the player from the current cave along the specified tunnel.  The new location must be marked

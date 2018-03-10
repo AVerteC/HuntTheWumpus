@@ -3,7 +3,6 @@
  *   @author Dave Reed
  *   @version 4/1/13
  */
-
 public class HuntTheWumpus {
 
     public static void main(String[] args) throws java.io.FileNotFoundException {
