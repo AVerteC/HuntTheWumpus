@@ -12,6 +12,7 @@ public class CaveMaze {
     private int numGrenades;
     private int numWumpi;
 
+
     /**
      * Enumeration class CaveContents - the possible contents of a "Hunt the Wumpus" cave.
      *   @author Dave Reed
@@ -37,9 +38,9 @@ public class CaveMaze {
 
         Random rand = new Random();
         //1 to 5 wumpi
-        this.numWumpi = rand.nextInt(20/4) + 1;
+        this.numWumpi = rand.nextInt(20 / 4) + 1;
         //wumpi * 4 = grenades
-        this.numGrenades = this.numWumpi*4;
+        this.numGrenades = this.numWumpi * 4;
 
         for (int i = 0; i < numCaves; i++) {
             int id = infile.nextInt();
@@ -53,12 +54,26 @@ public class CaveMaze {
         }
 
         this.currentCave = this.caves[0];
+        stContent(numWumpi, 1);
+        stContent(1,2);
+        stContent(1, 3);
         this.currentCave.markAsVisited();
         System.out.println(Arrays.toString(this.caves));
     }
 
-
-
+        //0 = nothing, 1 = wumpus, 2 = bats, 3 = pit
+        //only one type of content per cave
+        //only 1 bat cave
+        //only 1 pit
+    private void stContent(int amount, int contentNumber){
+        Random rand = new Random();
+            for (int j = 0; j < amount; j++) {
+                int numCave = rand.nextInt(18)+1;
+                if (this.caves[numCave].getContent() == 0){
+                this.caves[numCave].setContent(contentNumber);
+                }
+            }
+    }
 
     /**
      * Moves the player from the current cave along the specified tunnel.  The new location must be marked
@@ -104,11 +119,7 @@ public class CaveMaze {
         }
         return message;
     }
-
-    public void makeWumpi() {
-
-    }
-
+    
 
     /**
      * Reports whether the player is still alive.
@@ -133,3 +144,5 @@ public class CaveMaze {
 
     }
 }
+
+
