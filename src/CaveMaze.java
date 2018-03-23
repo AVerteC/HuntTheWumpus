@@ -69,9 +69,13 @@ public class CaveMaze {
         Random rand = new Random();
             for (int j = 0; j < amount; j++) {
                 int numCave = rand.nextInt(18)+1;
-                if (this.caves[numCave].getContent() == 0){
-                this.caves[numCave].setContent(contentNumber);
+                if (this.caves[numCave].getContent() != 0){
+                    //retry
+                    this.caves[rand.nextInt(18)+1].setContent(contentNumber);
                 }
+                else
+                    this.caves[numCave].setContent(contentNumber);
+
             }
     }
 
@@ -86,6 +90,7 @@ public class CaveMaze {
         this.currentCave = this.caves[this.currentCave.getAdjNumber(tunnel)];
         this.currentCave.markAsVisited();
         return "ok";
+
     }
 
     /**
@@ -97,8 +102,21 @@ public class CaveMaze {
      *   @return a status message describing the result of the toss attempt
      */
     public String toss(int tunnel) {
-        return "not implemented.";
-    }
+        //throw a grenade into num(2,3,4)
+        if (tunnel == 1 | tunnel == 2 | tunnel == 3){
+        this.numGrenades = this.numGrenades - 1;
+        //throw into a tunnel
+        int tunnelId = this.currentCave.getAdjNumber(tunnel);
+
+        if (this.caves[tunnelId].getContent() == 1){
+            return "You killed the wumpus with the grenade toss";
+            }
+        return "you have " + numGrenades + " left";
+        }
+
+        else {
+            return "invalid tunnel number";
+        }
 
     /**
      * Returns the current cave name and the names of adjacent caves (if those caves have been visited).
@@ -139,10 +157,7 @@ public class CaveMaze {
 
 
 
-    public static void main (String[]args) throws java.io.FileNotFoundException{
-        CaveMaze maze = new CaveMaze("cavesdata.dat");
 
-    }
 }
 
 

@@ -14,7 +14,7 @@ public class HuntTheWumpus {
         CaveMaze maze = new CaveMaze("cavesdata.dat");
 
 
-     /*   System.out.println("HUNT THE WUMPUS:  Your mission is to explore the maze of caves");
+        System.out.println("HUNT THE WUMPUS:  Your mission is to explore the maze of caves");
         System.out.println("and destroy all of the wumpi (without getting yourself killed).");
         System.out.println("To move to an adjacent cave, enter 'm' and the tunnel number.");
         System.out.println("To toss a grenade into a cave, enter 't' and the tunnel number.");
@@ -43,7 +43,7 @@ public class HuntTheWumpus {
             }
         }
         System.out.println("GAME OVER");
-    }*/
+    }
   }
-}
+
 
