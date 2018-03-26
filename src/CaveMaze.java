@@ -11,6 +11,7 @@ public class CaveMaze {
     //private Die d;
     private int numGrenades;
     private int numWumpi;
+    private boolean life = true;
 
 
     /**
@@ -88,11 +89,72 @@ public class CaveMaze {
      */
     public String move(int tunnel) {
         this.currentCave = this.caves[this.currentCave.getAdjNumber(tunnel)];
+        //sensing code
         this.currentCave.markAsVisited();
+        System.out.println("wumpi: "+numWumpi);
+        System.out.println("grenades: "+numGrenades);
+
+        senseDanger(1);
+        senseDanger(2);
+        senseDanger(3);
+        moveWumpus();
+        deathEvent();
         return "ok";
+    }
+    public void moveWumpus() {
+        for (int i = 0; i < 20; i++) {
+            int dangerChecker = this.caves[i].getContent();
+            Random rand = new Random();
+            int numRoom = rand.nextInt(3) + 1;
+            int adjtunnelNum = this.caves[1].getAdjNumber(numRoom);
+            if (dangerChecker == 1) {
+                //move the wumpus
+                //set current wumpus location to 0 and it's new adjacent spot to 1
+                if(this.caves[adjtunnelNum].getContent() == 0) {
+                    this.caves[i].setContent(1);
+                }
+                this.caves[i].setContent(0);
+            }
+        }
 
     }
 
+
+    public String deathEvent() {
+        int danger = this.currentCave.getContent();
+
+        if (danger == 1) {
+            System.out.println("The wumpus lunges at you and you die. you ded");
+            setDeath();
+        }
+
+        if (danger == 2) {
+            return "Bats pick you up and drop you somewhere else.";
+        }
+
+        if (danger == 3) {
+            System.out.println("You fell into the pit. you ded");
+            setDeath();
+        }
+        return "";
+
+    }
+
+    public void senseDanger(int tunid) {
+        int adjtunnelNum = this.currentCave.getAdjNumber(tunid);
+        int dangerChecker = this.caves[adjtunnelNum].getContent();
+        if (dangerChecker == 1) {
+            System.out.println("You smell a wumpus nearby");
+        }
+        else if (dangerChecker == 2) {
+            System.out.println("You hear bats nearby");
+        }
+        else if (dangerChecker == 3) {
+            System.out.println("You can feel a draft nearby");
+        }
+
+
+    }
     /**
      * Tosses a grenade (if the player has any) through the specified tunnel.  If there is a wumpus
      * in the corresponding cave, it is killed.  However, any remaining wumpi adjacent to the player are
@@ -103,61 +165,71 @@ public class CaveMaze {
      */
     public String toss(int tunnel) {
         //throw a grenade into num(2,3,4)
-        if (tunnel == 1 | tunnel == 2 | tunnel == 3){
-        this.numGrenades = this.numGrenades - 1;
-        //throw into a tunnel
-        int tunnelId = this.currentCave.getAdjNumber(tunnel);
+        if (tunnel == 1 | tunnel == 2 | tunnel == 3) {
+            this.numGrenades = this.numGrenades - 1;
+            //throw into a tunnel
+            int tunnelId = this.currentCave.getAdjNumber(tunnel);
 
-        if (this.caves[tunnelId].getContent() == 1){
-            return "You killed the wumpus with the grenade toss";
+            if (this.caves[tunnelId].getContent() == 1) {
+                this.numWumpi -= 1;
+                this.caves[tunnelId].setContent(0);
+                return "You killed the wumpus with the grenade toss";
             }
-        return "you have " + numGrenades + " left";
-        }
-
-        else {
+            return "you have " + this.numGrenades + " left";
+        } else {
             return "invalid tunnel number";
         }
+    }
 
-    /**
-     * Returns the current cave name and the names of adjacent caves (if those caves have been visited).
-     * Caves that have not yet been visited are identified as "unknown".  Also, warning messages are
-     * included if the player is adjacent to a wumpi, bats, or a pit.
-     *   @return a message containing the location information and warnings
-     */
-    public String showLocation() {
-        String message = "You are currently in " + this.currentCave.getCaveName();
-        for (int i = 1; i <= 3; i++) {
-            Cave adjCave = this.caves[this.currentCave.getAdjNumber(i)];
-            if (adjCave.hasBeenVisited()) {
-                message += "\n    (" + i + ") " + adjCave.getCaveName();
+        /**
+         * Returns the current cave name and the names of adjacent caves (if those caves have been visited).
+         * Caves that have not yet been visited are identified as "unknown".  Also, warning messages are
+         * included if the player is adjacent to a wumpi, bats, or a pit.
+         *   @return a message containing the location information and warnings
+         */
+        public String showLocation() {
+            String message = "You are currently in " + this.currentCave.getCaveName();
+            for (int i = 1; i <= 3; i++) {
+                Cave adjCave = this.caves[this.currentCave.getAdjNumber(i)];
+                if (adjCave.hasBeenVisited()) {
+                    message += "\n    (" + i + ") " + adjCave.getCaveName();
+                } else {
+                    message += "\n    (" + i + ") unknown";
+                }
             }
-            else {
-                message += "\n    (" + i + ") unknown";
-            }
+            return message;
         }
-        return message;
+
+
+        /**
+         * Reports whether the player is still alive.
+         *   @return true if alive, false otherwise
+         */
+        public boolean stillAlive () {
+            if(life == false) {
+            return false;
+            }
+            return true;
+        }
+
+        public void setDeath() {
+            this.life = false;
+        }
+
+        /**
+         * Reports whether there are any wumpi remaining.
+         *   @return true if wumpi remaining in the maze, false otherwise
+         */
+        public Boolean stillWumpi () {
+            if (numWumpi == 0) {
+                return false;
+            }
+            return true;
+        }
+
     }
-    
-
-    /**
-     * Reports whether the player is still alive.
-     *   @return true if alive, false otherwise
-     */
-    public boolean stillAlive() {
-        return true;
-    }
-
-    /**
-     * Reports whether there are any wumpi remaining.
-     *   @return true if wumpi remaining in the maze, false otherwise
-     */
-    public boolean stillWumpi() {
-        return true;
-    }
 
 
 
-
-}
 
 
