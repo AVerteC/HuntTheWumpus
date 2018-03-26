@@ -91,14 +91,14 @@ public class CaveMaze {
         this.currentCave = this.caves[this.currentCave.getAdjNumber(tunnel)];
         //sensing code
         this.currentCave.markAsVisited();
-        System.out.println("wumpi: "+numWumpi);
+        //System.out.println("wumpi: "+numWumpi);
         System.out.println("grenades: "+numGrenades);
 
         senseDanger(1);
         senseDanger(2);
         senseDanger(3);
-        moveWumpus();
         deathEvent();
+        moveWumpus();
         return "ok";
     }
     public void moveWumpus() {
@@ -112,6 +112,7 @@ public class CaveMaze {
                 //set current wumpus location to 0 and it's new adjacent spot to 1
                 if(this.caves[adjtunnelNum].getContent() == 0) {
                     this.caves[i].setContent(1);
+
                 }
                 this.caves[i].setContent(0);
             }
@@ -129,7 +130,11 @@ public class CaveMaze {
         }
 
         if (danger == 2) {
-            return "Bats pick you up and drop you somewhere else.";
+            System.out.println("Bats pick you up and drop you somewhere else.");
+            Random rand = new Random();
+            int randtunnelNum = rand.nextInt(19) + 1;;
+            //place you into a random room
+            this.currentCave=caves[randtunnelNum];
         }
 
         if (danger == 3) {
@@ -175,7 +180,7 @@ public class CaveMaze {
                 this.caves[tunnelId].setContent(0);
                 return "You killed the wumpus with the grenade toss";
             }
-            return "you have " + this.numGrenades + " left";
+            return "you have " + this.numGrenades + " grenades left";
         } else {
             return "invalid tunnel number";
         }
